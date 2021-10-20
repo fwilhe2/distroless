@@ -1,0 +1,30 @@
+FROM fedora:36 as builder
+
+RUN mkdir build
+RUN mkdir build/root
+RUN mkdir -p build/home/nonroot
+RUN mkdir build/bin
+
+ADD http://landley.net/toybox/bin/toybox-x86_64 /toybox
+RUN chmod +x /toybox
+RUN ln -s /toybox /bin/mysh
+RUN ln -s /toybox /bin/myls
+RUN ln -s /toybox /bin/mypwd
+
+FROM scratch
+
+COPY --from=builder /tmp /tmp
+COPY --from=builder /build /
+COPY --from=builder /etc/os-release /etc/os/release
+COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=builder /usr/share/licenses/tzdata /usr/share/licenses/tzdata
+
+COPY passwd /etc/passwd
+COPY group /etc/group
+COPY --from=builder /toybox /toybox
+COPY --from=builder /bin/mysh /bin/sh
+COPY --from=builder /bin/myls /bin/ls
+COPY --from=builder /bin/mypwd /bin/pwd
+
+
+ENTRYPOINT [ "sh" ]
