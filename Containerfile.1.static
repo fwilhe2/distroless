@@ -18,6 +18,12 @@ COPY --from=builder /build /
 COPY --from=builder /etc/os-release /etc/os/release
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /usr/share/licenses/tzdata /usr/share/licenses/tzdata
+COPY --from=builder /etc/pki /etc/pki
+COPY --from=builder /etc/ssl /etc/ssl
+COPY --from=builder /usr/bin/ca-legacy /usr/bin/ca-legacy
+COPY --from=builder /usr/share/pki/ca-trust-legacy/ca-bundle.legacy.default.crt /usr/share/pki/ca-trust-legacy/ca-bundle.legacy.default.crt
+COPY --from=builder /usr/share/pki/ca-trust-legacy/ca-bundle.legacy.disable.crt /usr/share/pki/ca-trust-legacy/ca-bundle.legacy.disable.crt
+COPY --from=builder /usr/share/pki/ca-trust-source/ /usr/share/pki/ca-trust-source/
 
 COPY passwd /etc/passwd
 COPY group /etc/group
