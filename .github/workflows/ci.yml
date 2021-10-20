@@ -20,3 +20,6 @@ jobs:
         CGO_ENABLED=0 go build check_certs.go
         docker build -t distroless:static-test -f Containerfile.1.static-test .
         docker run distroless:static-test
+        go build check_cgo.go
+        docker build -t distroless:base-test -f Containerfile.2.base-test .
+        docker run distroless:base-test

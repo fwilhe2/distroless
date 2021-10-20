@@ -1,0 +1,5 @@
+FROM distroless:base-debug
+
+COPY check_cgo /check_cgo
+
+ENTRYPOINT [ "/check_cgo" ]
