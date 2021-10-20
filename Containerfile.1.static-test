@@ -1,0 +1,5 @@
+FROM distroless:static
+
+COPY check_certs /check_certs
+
+ENTRYPOINT [ "/check_certs" ]

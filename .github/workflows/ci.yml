@@ -11,3 +11,12 @@ jobs:
     - name: Build
       run: |
         docker build -t distroless:static -f Containerfile.1.static .
+        docker build -t distroless:static-debug -f Containerfile.1.static-debug .
+        docker build -t distroless:base -f Containerfile.2.base .
+        docker build -t distroless:base-debug -f Containerfile.2.base-debug .
+
+    - name: Test
+      run: |
+        CGO_ENABLED=0 go build check_certs.go
+        docker build -t distroless:static-test -f Containerfile.1.static-test .
+        docker run distroless:static-test

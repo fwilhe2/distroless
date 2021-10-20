@@ -1,0 +1,5 @@
+FROM fedora:36 as builder
+
+FROM distroless:static
+
+COPY --from=builder /usr/lib64/libc.so.6 /usr/lib64/libc.so.6

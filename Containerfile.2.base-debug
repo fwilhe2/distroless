@@ -6,7 +6,7 @@ RUN ln -s /toybox /bin/mysh
 RUN ln -s /toybox /bin/myls
 RUN ln -s /toybox /bin/mypwd
 
-FROM distroless:static
+FROM distroless:base
 
 COPY --from=builder /toybox /toybox
 COPY --from=builder /bin/mysh /bin/sh
