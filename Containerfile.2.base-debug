@@ -1,16 +1,13 @@
 FROM fedora:36 as builder
 
-ADD http://landley.net/toybox/bin/toybox-x86_64 /toybox
-RUN chmod +x /toybox
-RUN ln -s /toybox /bin/mysh
-RUN ln -s /toybox /bin/myls
-RUN ln -s /toybox /bin/mypwd
+RUN mkdir /toybox
+ADD http://landley.net/toybox/bin/toybox-x86_64 /toybox/toybox
+RUN chmod +x /toybox/toybox
+WORKDIR /toybox
+RUN for i in $(./toybox); do ln -s toybox $i; done
 
 FROM distroless:base
 
-COPY --from=builder /toybox /toybox
-COPY --from=builder /bin/mysh /bin/sh
-COPY --from=builder /bin/myls /bin/ls
-COPY --from=builder /bin/mypwd /bin/pwd
+COPY --from=builder /toybox /bin
 
 ENTRYPOINT [ "sh" ]
