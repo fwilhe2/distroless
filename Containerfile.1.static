@@ -10,6 +10,7 @@ FROM scratch
 COPY --from=builder /tmp /tmp
 COPY --from=builder /build /
 COPY --from=builder /etc/os-release /etc/os/release
+COPY --from=builder /etc/os-release /usr/lib/os-release
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /usr/share/licenses/tzdata /usr/share/licenses/tzdata
 COPY --from=builder /etc/pki /etc/pki
