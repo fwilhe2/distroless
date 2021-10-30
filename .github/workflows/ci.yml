@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Install Container Structure Test
+      run: curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mkdir -p $HOME/bin && export PATH=$PATH:$HOME/bin && mv container-structure-test-linux-amd64 $HOME/bin/container-structure-test
+
     - name: Build
       run: |
         docker build -t distroless:static -f Containerfile.1.static .
@@ -21,7 +25,10 @@ jobs:
         docker build -t distroless:static-test -f Containerfile.1.static-test .
         docker run distroless:static-test
 
-    - name: CST
+    - name: Container Structure Test
       run: |
-        curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mkdir -p $HOME/bin && export PATH=$PATH:$HOME/bin && mv container-structure-test-linux-amd64 $HOME/bin/container-structure-test
         container-structure-test test --config base.yaml --image distroless:base-debug
+
+    - name: Container Structure Test
+      run: |
+        container-structure-test test --config static.yaml --image distroless:static-test
