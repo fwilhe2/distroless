@@ -11,6 +11,7 @@ jobs:
 
     - name: Build
       run: |
+        sudo apt-get -y update && sudo apt-get -y install systemd-container
         node build.js
         sudo systemd-nspawn --oci-bundle=. id
         sudo systemd-nspawn --oci-bundle=. curl --version
