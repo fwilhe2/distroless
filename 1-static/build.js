@@ -16,4 +16,10 @@ execSync(
   "wget --output-document rootfs/bin/toybox http://landley.net/toybox/bin/toybox-x86_64"
 );
 fs.chmodSync("rootfs/bin/toybox", 0777);
+
+execSync(
+  "wget --output-document rootfs/bin/curl https://github.com/moparisthebest/static-curl/releases/download/v7.79.1/curl-amd64"
+);
+fs.chmodSync("rootfs/bin/curl", 0777);
+
 execSync("bash make-bin.sh");
